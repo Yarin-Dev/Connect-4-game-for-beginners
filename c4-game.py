@@ -26,24 +26,24 @@ def print_board(matrix):
         print(line_to_print)
 
 
-def get_cul_index(cul, board):
+def get_cal_index(cal, board):
     for row_index in range(1, SIZE+1):
-        if board[-row_index][cul - 1] == EMPTY:  # if the index is empty
-            return -row_index, cul - 1
+        if board[-row_index][cal - 1] == EMPTY:  # if the index is empty
+            return -row_index, cal - 1
     return None
 
 
-# Checking if the cul is valid
-def is_valid_cul(cul, board):
+# Checking if the cal is valid
+def is_valid_cal(cal, board):
     """
-    Returns true if cul is valid and false if invalid.
+    Returns true if cal is valid and false if invalid.
     """
     # if index out of range
-    if cul > SIZE or cul < 1:
+    if cal > SIZE or cal < 1:
         return False
 
-    # if the cul is full
-    if get_cul_index(cul, board) is None:
+    # if the cal is full
+    if get_cal_index(cal, board) is None:
         return False
 
     return True
@@ -52,18 +52,18 @@ def is_valid_cul(cul, board):
 # Input player's move
 def get_player_move(board):
     """
-    :returns: the cul that chosen.
+    :returns: the cal that chosen.
     """
-    # input a cul until return
+    # input a cal until return
     while True:
-        cul = int(input("Enter the column: "))
+        cal = int(input("Enter the column: "))
 
         # if input is exit
-        if cul == EXIT:
+        if cal == EXIT:
             return EXIT
         # if the input is valid
-        elif is_valid_cul(cul, board):
-            return cul
+        elif is_valid_cal(cal, board):
+            return cal
         else:
             print("Wrong move, try again.")
 
@@ -77,9 +77,9 @@ def switch_player(current_player):
 def check_raw(board, current_player):
     for row_index in range(SIZE):
         counter = 0
-        for cul in range(SIZE):
+        for cal in range(SIZE):
             # if the player got this index
-            if board[row_index][cul] == current_player:
+            if board[row_index][cal] == current_player:
                 counter += 1
             # else, reset the counter
             else:
@@ -90,11 +90,11 @@ def check_raw(board, current_player):
     return False
 
 
-def check_cul(board, current_player):
-    for cul_index in range(SIZE):
+def check_cal(board, current_player):
+    for cal_index in range(SIZE):
         counter = 0
         for row_index in range(SIZE):
-            if board[row_index][cul_index] == current_player:
+            if board[row_index][cal_index] == current_player:
                 counter += 1
             else:
                 counter = 0
@@ -106,7 +106,7 @@ def check_cul(board, current_player):
 def is_winner(board, current_player):
     if check_raw(board, current_player):
         return True
-    elif check_cul(board, current_player):
+    elif check_cal(board, current_player):
         return True
     return False
 
@@ -127,18 +127,18 @@ def main():
     print_board(board)
     total_turns = 0
 
-    # while there are still culs left
+    # while there are still cals left
     while total_turns < SIZE**2:
         print(get_player(current_player), "player -")
         # input a row from the player
-        cul = get_player_move(board)
+        cal = get_player_move(board)
         # if input is exit
-        if cul == EXIT:
+        if cal == EXIT:
             return EXIT
 
         # update in the board
-        row, cul = get_cul_index(cul, board)
-        board[row][cul] = current_player
+        row, cal = get_cal_index(cal, board)
+        board[row][cal] = current_player
 
         print_board(board)
 
